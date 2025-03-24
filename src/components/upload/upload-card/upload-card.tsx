@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,10 +9,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Toggle } from "@/components/ui/toggle";
+import { ECategory, ESector, ETags } from "@/constants/types";
+import { uploadVideo } from "@/services/queries/video.query";
+import { useState } from "react";
 
 export default function UploadCard() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
+  const [category, setCategory] = useState<ECategory>(ECategory.FIVE);
+  const [sector, setSector] = useState<ESector>(ESector.DEF);
+  const [tags, setTags] = useState<ETags>(ETags.DRILLS);
   return (
     <>
       <Card className="w-full max-w-[400px]">
@@ -18,29 +28,96 @@ export default function UploadCard() {
           <CardTitle>Subir Vídeo</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <Input placeholder="Título do vídeo" />
-          <Input placeholder="Descrição" />
-          <Input placeholder="URL" />
-          <Label >Categoria:</Label>
+          <Input
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Título do vídeo"
+          />
+          <Input
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Descrição"
+          />
+          <Input onChange={(e) => setUrl(e.target.value)} placeholder="URL" />
+          <p className="font-semibold">Categoria:</p>
           <div className="w-full flex flex-row">
-            <Toggle className="cursor-pointer">9x9</Toggle>
-            <Toggle className="cursor-pointer">5x5</Toggle>
+            <Toggle
+              onClick={() => setCategory(ECategory.NINE)}
+              className="cursor-pointer"
+            >
+              9x9
+            </Toggle>
+            <Toggle
+              onClick={() => setCategory(ECategory.FIVE)}
+              className="cursor-pointer"
+            >
+              5x5
+            </Toggle>
           </div>
-          <Label className="text-bold">Setor:</Label>
+          <p className="font-semibold">Setor:</p>
           <div className="w-full flex flex-row">
-            <Toggle className="cursor-pointer">Ataque</Toggle>
-            <Toggle className="cursor-pointer">Defesa</Toggle>
-            <Toggle className="cursor-pointer">Special Teams</Toggle>
+            <Toggle
+              onClick={() => setSector(ESector.OFF)}
+              className="cursor-pointer"
+            >
+              Ataque
+            </Toggle>
+            <Toggle
+              onClick={() => setSector(ESector.DEF)}
+              className="cursor-pointer"
+            >
+              Defesa
+            </Toggle>
+            <Toggle
+              onClick={() => setSector(ESector.SPC)}
+              className="cursor-pointer"
+            >
+              Special Teams
+            </Toggle>
           </div>
-          <Label className="text-bold">Tipo:</Label>
+          <p className="font-semibold">Tipo:</p>
           <div className="w-full flex flex-row">
-            <Toggle className="cursor-pointer">Playbook</Toggle>
-            <Toggle className="cursor-pointer">Scout</Toggle>
-            <Toggle className="cursor-pointer">Drills</Toggle>
+            <Toggle
+              onClick={() => setTags(ETags.PLAYBOOK)}
+              className="cursor-pointer"
+            >
+              Playbook
+            </Toggle>
+            <Toggle
+              onClick={() => setTags(ETags.SCOUT)}
+              className="cursor-pointer"
+            >
+              Scout
+            </Toggle>
+            <Toggle
+              onClick={() => setTags(ETags.DRILLS)}
+              className="cursor-pointer"
+            >
+              Drills
+            </Toggle>
+            <Toggle
+              onClick={() => setTags(ETags.TREINO)}
+              className="cursor-pointer"
+            >
+              Treino
+            </Toggle>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-4">
-          <Button className="w-full cursor-pointer">Enviar</Button>
+          <Button
+            className="w-full cursor-pointer"
+            onClick={() =>
+              uploadVideo({
+                title: title,
+                description: description,
+                url: url,
+                category: category,
+                sector: sector,
+                tags: tags,
+                author: "paulinho",
+              })
+            }
+          >
+            Enviar
+          </Button>
         </CardFooter>
       </Card>
     </>
