@@ -1,10 +1,14 @@
 
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
+import { FiUpload } from "react-icons/fi";
+
 
 
 export default function Header(){
     return (
-        <div className="w-full h-full flex items-center justify-start border-none border-b-none px-8">
+        <div className="w-full h-full flex items-center justify-between border-none border-b-none px-8">
         <div className="p-6">
           <Image
             src="/diamond-logo.png"
@@ -13,6 +17,12 @@ export default function Header(){
             height={50}
             className="w-auto h-auto max-w-full max-h-full"
           />
+        </div>
+        <div className="pr-14">
+            <Button>
+                <FiUpload />
+                <Link href="/upload">Upload</Link>
+            </Button>
         </div>
       </div>
     )
