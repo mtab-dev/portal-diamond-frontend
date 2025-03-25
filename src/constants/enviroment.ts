@@ -1,3 +1,3 @@
 export const ENVIRONMENT = {
-    BASE_API: "http://localhost:8080",
+    BASE_API: process.env.NEXT_PUBLIC_BASE_API,
 }
