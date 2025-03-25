@@ -4,9 +4,22 @@ export interface IUploadVideo {
     url: string
     category: ECategory
     sector: ESector
-    tags: ETags
+    tag: ETags
     author: string
 }
+
+export interface IVideo {
+    id: string
+    title: string
+    description: string
+    url: string
+    category: ECategory
+    sector: ESector
+    tag: ETags
+    author: string
+
+}
+
 
 export enum ECategory {
     NINE = "9x9",

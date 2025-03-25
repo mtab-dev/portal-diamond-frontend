@@ -115,7 +115,7 @@ export default function UploadCard() {
                 url: url,
                 category: category,
                 sector: sector,
-                tags: tags,
+                tag: tags,
                 author: "paulinho",
               })
             }
