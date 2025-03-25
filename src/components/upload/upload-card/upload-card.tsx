@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { ECategory, ESector, ETags } from "@/constants/types";
-import { uploadVideo } from "@/services/queries/video.query";
+import useVideo from "@/hooks/videos/useVideo";
 import { useState } from "react";
 
 export default function UploadCard() {
@@ -21,6 +21,9 @@ export default function UploadCard() {
   const [category, setCategory] = useState<ECategory>(ECategory.FIVE);
   const [sector, setSector] = useState<ESector>(ESector.DEF);
   const [tags, setTags] = useState<ETags>(ETags.DRILLS);
+
+  const { uploadVideoMutate, isPending } = useVideo();
+
   return (
     <>
       <Card className="w-full max-w-[400px]">
@@ -103,9 +106,10 @@ export default function UploadCard() {
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-4">
           <Button
+            disabled={isPending}
             className="w-full cursor-pointer"
             onClick={() =>
-              uploadVideo({
+              uploadVideoMutate({
                 title: title,
                 description: description,
                 url: url,
@@ -116,7 +120,9 @@ export default function UploadCard() {
               })
             }
           >
-            Enviar
+            {
+                isPending ? "Enviando..." : "Enviar"
+            }
           </Button>
         </CardFooter>
       </Card>
